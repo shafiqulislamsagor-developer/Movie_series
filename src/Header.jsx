@@ -1,7 +1,7 @@
-import logo from "./../assets/logo.svg";
-import moons from "./../assets/icons/moon.svg";
-import ring from "./../assets/ring.svg";
-import shopping from "./../assets/shopping-cart.svg";
+import logo from "./assets/logo.svg";
+import moons from "./assets/icons/moon.svg";
+import ring from "./assets/ring.svg";
+import shopping from "./assets/shopping-cart.svg";
 
 export default function Header() {
   return (
