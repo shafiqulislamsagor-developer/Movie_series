@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import tag from "../assets/tag.svg";
+import { MovieContext } from "../context";
 import { getFunctionUrl } from "../utils/cine-utility";
 import MovieDetailsModal from "./MovieDetailsModal";
 import Rating from "./Rating";
@@ -7,6 +8,20 @@ import Rating from "./Rating";
 export default function MovieCard({ movie }) {
   const [showModal, setShowModal] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
+
+  const { cardData, setCardData } = useContext(MovieContext);
+
+  const handleAddToCart = (e, movie) => {
+    e.stopPropagation();
+
+    const found = cardData.find((item) => item.id === movie.id);
+
+    if (!found) {
+      setCardData([...cardData, movie]);
+    } else {
+      console.error("error , don't added movie");
+    }
+  };
 
   return (
     <>
@@ -29,7 +44,7 @@ export default function MovieCard({ movie }) {
         <img
           className="w-full h-[400px] object-cover"
           src={getFunctionUrl(movie.cover)}
-          alt=""
+          alt={movie.title}
         />
         <figcaption className="pt-4">
           <h3 className="text-xl mb-1">{movie.title}</h3>
@@ -38,10 +53,7 @@ export default function MovieCard({ movie }) {
             <Rating value={movie.rating} />
           </div>
           <a
-            onClick={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-            }}
+            onClick={(e) => handleAddToCart(e, movie)}
             className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
             href="#"
           >
